@@ -20,6 +20,9 @@ namespace ExtraConcentratedJuice.BreakAndEnter
             // Hello by name is Sven and your name sucks because it's just three random words combined
             // I had to paraphrase because I couldn't find the picture
             // Now merge my PR already
+            //Hello my name is Random
+            //FIX YOUR PLUGINS aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            //but fr tho thanks for your work
             Logger.Log("BreakAndEnter by ExtraConcatenatedJuice loaded");
             Logger.Log("For help please visit https://iceplugins.xyz/BreakAndEnter/");
         }
