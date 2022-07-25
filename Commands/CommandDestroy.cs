@@ -36,33 +36,30 @@ namespace ExtraConcentratedJuice.BreakAndEnter
 
                 if (barri != null)
                 {
-                    BarricadeManager.tryGetInfo(barri.root, out byte x, out byte y, out ushort plant, out ushort index, out BarricadeRegion region);
+                    BarricadeDrop barr = BarricadeManager.FindBarricadeByRootTransform(barri.root);
+                    var br = BarricadeManager.tryGetRegion(barri.root, out var x, out var y, out var plant, out _);
 
-                    region.barricades.RemoveAt(index);
-                    
-                    BarricadeManager.instance.channel.send("tellTakeBarricade", ESteamCall.ALL, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[]
+                    if (!br)
                     {
-                        x,
-                        y,
-                        plant,
-                        index
-                    });
+                        UnturnedChat.Say(caller, Util.Translate("invalid_destroy"));
+                        return;
+                    }
+
+                    BarricadeManager.destroyBarricade(barr, x, y, plant);
 
                     UnturnedChat.Say(caller, Util.Translate("barricade_removed"));
                 }
                 else if (struc != null)
                 {
-                    StructureManager.tryGetInfo(struc.transform, out byte x, out byte y, out ushort index, out StructureRegion region);
-
-                    region.structures.RemoveAt(index);
-
-                    StructureManager.instance.channel.send("tellTakeStructure", ESteamCall.ALL, x, y, StructureManager.STRUCTURE_REGIONS, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[]
+                    StructureDrop SD = StructureManager.FindStructureByRootTransform(hit.transform);
+                    StructureManager.tryGetRegion(hit.transform, out var x, out var y, out StructureRegion sr);
+                    if (sr == null)
                     {
-                        x,
-                        y,
-                        index,
-                        (region.drops[index].model.position - player.transform.position).normalized * 100f
-                    });
+                        UnturnedChat.Say(caller, Util.Translate("invalid_destroy"));
+                        return;
+                    }
+
+                    StructureManager.destroyStructure(SD, x, y, Vector3.up);
 
                     UnturnedChat.Say(caller, Util.Translate("structure_removed"));
                 }
